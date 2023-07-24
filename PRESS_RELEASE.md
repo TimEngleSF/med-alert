@@ -1,0 +1,19 @@
+# MediAlert
+
+## MediAlert serves individuals with medication needs and their caregivers.
+
+The MediAlert app is a lifesaver for individuals managing multiple medications and their caregivers, offering an easy way to track medication intake, send reminders, and provide instant access to medication history in case of emergencies, ensuring safety and peace of mind.
+
+Managing multiple medications can be a complex and stressful task, especially for individuals with chronic conditions or the elderly. Remembering to take the right medication at the right time, keeping track of doses taken, and sharing this information with caregivers or medical professionals in case of emergencies can be challenging. This can lead to missed doses, overdosing, or incorrect medication intake, which can have serious health implications.
+
+MediAlert provides a comprehensive solution to these problems. It allows users to easily track their medication intake, ensuring they take the right medication at the right time. The app sends reminders to users when it's time to take their medication, reducing the chances of missed doses. In case a dose is missed, MediAlert alerts the user's preferred contacts, ensuring timely intervention. Moreover, in case of emergencies, the app provides a QR code that can be scanned by non-users to check a person's medication history. This feature can be crucial for emergency responders to understand the person's medication regimen quickly. Thus, MediAlert not only simplifies medication management but also provides a safety net for its users.
+
+> "MediAlert is more than just a medication management app; it's a lifeline for our users and their loved ones. We understand the complexities and anxieties that come with managing multiple medications, and our goal is to alleviate these burdens. With MediAlert, we're not just reminding users to take their medication, we're providing peace of mind, ensuring that in case of any mishap, help is alerted promptly. We believe that technology should make life easier and safer, and that's exactly what MediAlert does." - Tim Engle, Head of Customer Service at MediAlert.
+
+The app is ready to start using once a user is authorized. The user just needs to enter their medication and when it needs to be taken into MediAlert's simple form. User's have the option to add caretakers' information in order to keep them updated on the user's medication status. The user only needs to know how to enter text into a form and they are ready to start using MediAlert.
+
+Getting started with MediAlert is as easy as 1-2-3. After a quick authorization process, users can immediately begin entering their medication details into our user-friendly interface. Simply input the name of the medication and the time it needs to be taken. But that's not all - MediAlert also allows users to add the contact details of their caretakers or loved ones. This ensures that those who care about you are kept in the loop about your medication status. With MediAlert, managing your medication is just a few taps away. You don't need to be tech-savvy to use our app - if you can type, you can use MediAlert!
+
+> "As a caregiver, MediAlert has been a game-changer for me," shares John Smith, who uses MediAlert to manage his mother's medication schedule. "It's not just about reminding her to take her medication, but also the peace of mind it gives us both knowing that I'm immediately alerted if she misses a dose. It's like having an extra pair of eyes, making sure nothing slips through the cracks. MediAlert has truly brought a new level of ease and confidence to our daily routine."
+
+MediAlert is more than just an app; it's a tool for better health management and peace of mind. We invite you to experience the convenience and reassurance that MediAlert provides.
