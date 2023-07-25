@@ -22,27 +22,41 @@ const connectToCollection = async () => {
 connectToCollection();
 
 module.exports = {
-  postUser: async (reqBody) => {
+  createUser: async (reqBody) => {
     const { user, sched, contacts } = reqBody;
 
-    const document = {
+    const userDocument = {
       name: user.name,
       email: user.email,
       authenticated: true,
       authorization: 'user',
-      qr_code: null,
+      qrCode: null,
       allergies: user.allergies,
     };
 
-    const result = await usersCollection.insertOne({ ...document });
-    await schedulesCollection.insertOne({
-      sched,
-      user_id: result.insertedId,
+    const scheduleDocument = sched.map((medicine) => ({
+      name: medicine.name,
+      time: medicine.time,
+      timeTaken: null,
+      taken: false,
+    }));
+
+    const userResult = await usersCollection.insertOne({ ...userDocument });
+    const userId = userResult.insertedId;
+    const schedResult = await schedulesCollection.insertOne({
+      userId,
+      scheduleDocument,
     });
-    await contactsCollection.insertOne({
+    const contactResult = await contactsCollection.insertOne({
       contacts,
-      user_id: result.insertedId,
+      userId,
     });
-    return result;
+
+    const responseBody = {
+      user: { id: userId, ...userDocument },
+      schedule: { id: schedResult.insertedId, scheduleDocument },
+      contacts: { id: contactResult.insertedId, contacts },
+    };
+    return responseBody;
   },
 };

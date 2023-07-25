@@ -5,9 +5,14 @@ module.exports = {
     res.send('GOT A USER!');
   },
   createUser: async (req, res) => {
+    const { body } = req;
     try {
-      const userID = await Users.postUser(req.body);
-      res.status(201).send(userID);
+      const responseBody = await Users.createUser(body);
+      // const responseBody = {
+      //   user: { id: ids.userId, ...body.user },
+      //   schedule: { id: ids.scheduleId, schedule: body.sched },
+      // };
+      res.status(201).send(responseBody);
     } catch (err) {
       res.status(400).send(err);
       throw err;
