@@ -24,7 +24,51 @@ const connectToCollection = async () => {
 connectToCollection();
 
 module.exports = {
-  getAllUser: async (email) => {},
+  getAllUserInfo: async (email) => {
+    // Get user Info
+    const userData = await usersCollection.findOne({ email: email });
+    console.log(userData);
+    // AggregateMedicine
+    const medsCursor = await medicineCollection.aggregate([
+      {
+        $match: {
+          userId: userData._id,
+        },
+      },
+      {
+        $project: {
+          userId: 0,
+        },
+      },
+      {
+        $group: {
+          _id: '$userId',
+          medicines: {
+            $push: '$$ROOT',
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+    ]);
+
+    const medsData = await medsCursor.toArray();
+    // Get contacts info
+    const contactsData = await contactsCollection.findOne({
+      userId: userData._id,
+    });
+
+    const responseBody = {
+      user: userData,
+      medicines: medsData[0].medicines,
+      contacts: contactsData,
+    };
+
+    return responseBody;
+  },
 
   createUser: async (reqBody) => {
     const { user, sched, contacts } = reqBody;
