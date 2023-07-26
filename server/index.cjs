@@ -1,18 +1,19 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const connectDb = require('./db/index.cjs');
 const cors = require('cors');
-const passport = require('passport');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const router = require('./routes.cjs');
+const session = require('express-session');
+const passport = require('passport');
 const morgan = require('morgan');
-const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+require('./strategies/local.cjs');
+const router = require('./routes.cjs');
+const authRouter = require('./routes/auth.cjs');
+const connectDb = require('./db/index.cjs');
+
+const PORT = process.env.PORT || 3000;
+const memoryStore = new session.MemoryStore();
 
 const startServer = async () => {
   try {
@@ -20,19 +21,24 @@ const startServer = async () => {
 
     app.use(morgan('dev'));
     app.use(cors());
+
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
+
+    app.use(cookieParser());
     app.use(
       session({
-        secret: 'your secret here',
+        secret: 'SFSFGDSGSHHSFHFDSDFGHDFHSDFGGSWERTG',
         resave: false,
         saveUninitialized: true,
+        store: memoryStore,
       })
     );
 
     app.use(passport.initialize());
     app.use(passport.session());
 
+    app.use('/api/auth', authRouter);
     app.use('/api/', router);
 
     app.listen(PORT, () => {

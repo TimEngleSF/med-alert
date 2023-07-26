@@ -1,3 +1,3 @@
-exports.CreateLoginUser = require('./CreateLoginUser.cjs');
+exports.Auth = require('./auth.cjs');
 exports.Users = require('./Users.cjs');
 exports.Schedules = require('./Schedules.cjs');

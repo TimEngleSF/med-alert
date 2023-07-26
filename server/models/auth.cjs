@@ -1,5 +1,6 @@
 const connectDB = require('../db/index.cjs');
-
+const passport = require('passport');
+const { hashPassword } = require('../utils/helpers.cjs');
 let usersCollection;
 // let schedulesCollection;
 let contactsCollection;
@@ -24,9 +25,6 @@ const connectToCollection = async () => {
 connectToCollection();
 
 module.exports = {
-  authenticateUser: async (body) => {
-    const { email, password } = body;
-  },
   getAllUserInfo: async (email) => {
     // Get user Info
     const userData = await usersCollection.findOne({ email: email });
@@ -73,13 +71,14 @@ module.exports = {
     return responseBody;
   },
 
-  createUser: async (reqBody) => {
+  register: async (reqBody) => {
     const { user, sched, contacts } = reqBody;
 
     const userDocument = {
       name: user.name,
       email: user.email,
-      password: user.password,
+      username: user.username,
+      password: '',
       authenticated: true,
       authorization: 'user',
       qrCode:
@@ -94,59 +93,69 @@ module.exports = {
       taken: false,
     }));
 
-    // Check if user exists, if so return
-    const userDB = await usersCollection.findOne({ email: user.email });
-    if (userDB) {
-      return false;
-    }
+    try {
+      // Check if user exists, if so return
+      const userDB = await usersCollection.findOne({ email: user.email });
+      if (userDB) {
+        return false;
+      }
+      /////////////////////////Continue if User does not Exist/////////////////////////////////
+      // Create Hashed password
+      userDocument.password = await hashPassword(user.password);
 
-    //  Insert user
-    const userResult = await usersCollection.insertOne({ ...userDocument });
-    const userId = userResult.insertedId;
+      //  Insert user
+      const userResult = await usersCollection.insertOne({
+        ...userDocument,
+      });
+      const userId = userResult.insertedId;
 
-    //  Insert Medicine
-    await Promise.all(
-      medicineDocuments.map(
-        async (med) => await medicineCollection.insertOne({ userId, ...med })
-      )
-    );
+      //  Insert Medicine
+      await Promise.all(
+        medicineDocuments.map(
+          async (med) => await medicineCollection.insertOne({ userId, ...med })
+        )
+      );
 
-    // Insert Contacts
-    const contactResult = await contactsCollection.insertOne({
-      contacts,
-      userId,
-    });
+      // Insert Contacts
+      const contactResult = await contactsCollection.insertOne({
+        contacts,
+        userId,
+      });
 
-    // AggregateMedicine
-    const medsCursor = await medicineCollection.aggregate([
-      {
-        $match: {
-          userId: userId,
-        },
-      },
-      {
-        $group: {
-          _id: '$userId',
-          medicines: {
-            $push: '$$ROOT',
+      // AggregateMedicine
+      const medsCursor = await medicineCollection.aggregate([
+        {
+          $match: {
+            userId: userId,
           },
         },
-      },
-      {
-        $project: {
-          _id: 0,
+        {
+          $group: {
+            _id: '$userId',
+            medicines: {
+              $push: '$$ROOT',
+            },
+          },
         },
-      },
-    ]);
+        {
+          $project: {
+            _id: 0,
+          },
+        },
+      ]);
 
-    const medsData = await medsCursor.toArray();
+      const medsData = await medsCursor.toArray();
 
-    const responseBody = {
-      user: { id: userId, ...userDocument },
-      // schedule: { id: schedResult.insertedId, scheduleDocument },
-      medicines: medsData[0].medicines,
-      contacts: { id: contactResult.insertedId, contacts },
-    };
-    return responseBody;
+      const responseBody = {
+        user: { id: userId, ...userDocument },
+        // schedule: { id: schedResult.insertedId, scheduleDocument },
+        medicines: medsData[0].medicines,
+        contacts: { id: contactResult.insertedId, contacts },
+      };
+      return responseBody;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   },
 };

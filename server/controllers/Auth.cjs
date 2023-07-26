@@ -1,19 +1,25 @@
-const { CreateLoginUser } = require('../models/index.cjs');
+const { Auth } = require('../models/index.cjs');
 
 module.exports = {
   getAllUserInfo: async (req, res) => {
     const { email } = req.params;
+    console.log(req.cookies);
     try {
-      const responseBody = await CreateLoginUser.getAllUserInfo(email);
+      const responseBody = await Auth.getAllUserInfo(email);
       res.send(responseBody);
     } catch (err) {
       res.status(400).send(err);
     }
   },
-  createUser: async (req, res) => {
+
+  login: async (req, res) => {
+    return await Auth.login();
+  },
+
+  register: async (req, res) => {
     const { body } = req;
     try {
-      const responseBody = await CreateLoginUser.createUser(body);
+      const responseBody = await Auth.register(body);
       if (!responseBody) {
         res.status(400).send({ msg: 'User already exists!' });
       } else {

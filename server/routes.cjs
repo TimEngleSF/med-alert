@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const controllers = require('./controllers/index.cjs');
+const { Auth } = require('./controllers/index.cjs');
+const passport = require('passport');
 
-router.get('/userInfo/:email', controllers.CreateLoginUser.getAllUserInfo);
-router.post('/userCreate/', controllers.CreateLoginUser.createUser);
-// router.post('/login', controllers.CreateLoginUser.);
+const ensureAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    console.log('hello!', req.user.email);
+    return next();
+  }
+  res.redirect('/login');
+};
 
-router.get('/scheds', controllers.Schedules.getSchedule);
-router.post('/scheds', controllers.Schedules.postSchedule);
-
-// router.get('/contacts', controllers.Contacts.getContacts);
-// router.post('/contacts', controllers.Contacts.postContacts);
+router.get('/userInfo/:email', ensureAuthenticated, Auth.getAllUserInfo);
 
 module.exports = router;
