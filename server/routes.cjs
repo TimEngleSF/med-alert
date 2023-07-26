@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const controllers = require('./controllers/index.cjs');
 
-router.get('/userLogin/:email', controllers.CreateLoginUser.getAllUserInfo);
-router.post('/userCreate/', controllers.Users.createUser);
+router.get('/userInfo/:email', controllers.CreateLoginUser.getAllUserInfo);
+router.post('/userCreate/', controllers.CreateLoginUser.createUser);
+// router.post('/login', controllers.CreateLoginUser.);
 
 router.get('/scheds', controllers.Schedules.getSchedule);
 router.post('/scheds', controllers.Schedules.postSchedule);

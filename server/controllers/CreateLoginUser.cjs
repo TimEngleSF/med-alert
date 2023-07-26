@@ -14,11 +14,15 @@ module.exports = {
     const { body } = req;
     try {
       const responseBody = await CreateLoginUser.createUser(body);
+      if (!responseBody) {
+        res.status(400).send({ msg: 'User already exists!' });
+      } else {
+        res.status(201).send(responseBody);
+      }
       // const responseBody = {
       //   user: { id: ids.userId, ...body.user },
       //   schedule: { id: ids.scheduleId, schedule: body.sched },
       // };
-      res.status(201).send(responseBody);
     } catch (err) {
       res.status(400).send(err);
       throw err;

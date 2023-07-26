@@ -24,6 +24,9 @@ const connectToCollection = async () => {
 connectToCollection();
 
 module.exports = {
+  authenticateUser: async (body) => {
+    const { email, password } = body;
+  },
   getAllUserInfo: async (email) => {
     // Get user Info
     const userData = await usersCollection.findOne({ email: email });
@@ -76,6 +79,7 @@ module.exports = {
     const userDocument = {
       name: user.name,
       email: user.email,
+      password: user.password,
       authenticated: true,
       authorization: 'user',
       qrCode:
@@ -89,6 +93,12 @@ module.exports = {
       timeTaken: null,
       taken: false,
     }));
+
+    // Check if user exists, if so return
+    const userDB = await usersCollection.findOne({ email: user.email });
+    if (userDB) {
+      return false;
+    }
 
     //  Insert user
     const userResult = await usersCollection.insertOne({ ...userDocument });
