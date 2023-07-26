@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
-const FormContainer = ({ form }) => {
+
+const LoginForm = ({ setShowRegister }) => {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
@@ -34,18 +36,8 @@ const FormContainer = ({ form }) => {
     }
   };
 
-  const check = async () => {
-    try {
-      console.log('check');
-      const call = await axios({
-        method: 'GET',
-        url: 'http://127.0.0.1:3000/api/userInfo/cool@email.com',
-        withCredentials: true,
-      });
-      console.log(call);
-    } catch (err) {
-      console.error(err);
-    }
+  const handleRegClick = (e) => {
+    setShowRegister(true);
   };
 
   return (
@@ -85,7 +77,7 @@ const FormContainer = ({ form }) => {
           <button
             type="button"
             className="outline h-8 outline-2 cursor-pointer rounded-md"
-            onClick={check}
+            onClick={handleRegClick}
           >
             Regiser
           </button>
@@ -95,4 +87,8 @@ const FormContainer = ({ form }) => {
   );
 };
 
-export default FormContainer;
+export default LoginForm;
+
+LoginForm.propTypes = {
+  setShowRegister: PropTypes.func,
+};
