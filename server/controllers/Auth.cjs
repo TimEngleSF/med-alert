@@ -3,7 +3,6 @@ const { Auth } = require('../models/index.cjs');
 module.exports = {
   getAllUserInfo: async (req, res) => {
     const { email } = req.params;
-    console.log(req.cookies);
     try {
       const responseBody = await Auth.getAllUserInfo(email);
       res.send(responseBody);

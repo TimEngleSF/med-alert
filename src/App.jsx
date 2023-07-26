@@ -72,7 +72,7 @@ function App() {
   // });
 
   return (
-    <div className="container bg-cyan-50 h-full py-6 ">
+    <div className="container bg-cyan-50 h-full py-6 mx-auto max-w-[542px]">
       <header>
         <h1 className="text-4xl mb-10 text-center tracking-[0.225em] font-bold">
           MediAlert*

@@ -26,6 +26,7 @@ connectToCollection();
 
 module.exports = {
   getAllUserInfo: async (email) => {
+    console.log('CHeck');
     // Get user Info
     const userData = await usersCollection.findOne({ email: email });
     console.log(userData);
@@ -72,7 +73,7 @@ module.exports = {
   },
 
   register: async (reqBody) => {
-    const { user, sched, contacts } = reqBody;
+    const { user, medicines, contacts } = reqBody;
 
     const userDocument = {
       name: user.name,
@@ -86,7 +87,7 @@ module.exports = {
       allergies: user.allergies,
     };
 
-    const medicineDocuments = sched.map((medicine) => ({
+    const medicineDocuments = medicines.map((medicine) => ({
       name: medicine.name,
       time: medicine.time,
       timeTaken: null,

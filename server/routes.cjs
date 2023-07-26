@@ -5,11 +5,12 @@ const { Auth } = require('./controllers/index.cjs');
 
 const ensureAuthenticated = (req, res, next) => {
   console.log('check');
+  console.log(req.headers);
   if (req.isAuthenticated()) {
     console.log('hello!', req.user.email);
     return next();
   }
-  console.log(req.isAuthenticated());
+  console.log('Authenticated? ', req.isAuthenticated());
   res.status(400);
   next();
 };

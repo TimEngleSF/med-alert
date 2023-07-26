@@ -29,14 +29,12 @@ const LoginForm = ({ setShowRegister }) => {
         data: { email: emailValue, password: passwordValue },
       });
       console.log(data);
-
-      console.log(call);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleRegClick = (e) => {
+  const handleRegClick = () => {
     setShowRegister(true);
   };
 

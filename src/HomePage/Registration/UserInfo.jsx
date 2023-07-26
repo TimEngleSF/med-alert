@@ -1,9 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import FormInput from '../Utilities/FormInput';
 import Button from '../Utilities/Button';
 const UserInfo = ({
+  usernameValue,
+  emailValue,
+  passwordValue,
   setUsernameValue,
   setEmailValue,
   setPasswordValue,
@@ -20,7 +22,7 @@ const UserInfo = ({
   };
 
   const onRegistration = () => {
-    setRegistrationPage('medicines');
+    setRegistrationPage('medicine');
   };
 
   //////Need to reach out to DB and check if username or email already exist
@@ -32,12 +34,14 @@ const UserInfo = ({
         <FormInput
           text="Username"
           type="text"
+          value={usernameValue}
           onChange={handleChange(setUsernameValue)}
         />
         <FormInput
           text="Email"
           type="email"
           onChange={handleChange(setEmailValue)}
+          value={emailValue}
         />
         <FormInput
           text="Password"
@@ -60,6 +64,9 @@ const UserInfo = ({
 };
 
 UserInfo.propTypes = {
+  usernameValue: PropTypes.string,
+  emailValue: PropTypes.string,
+  passwordValue: PropTypes.string,
   setRegistrationPage: PropTypes.func,
   setUsernameValue: PropTypes.func,
   setEmailValue: PropTypes.func,
