@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import List from './User/List/List';
-import Times from './User/List/Times';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './HomePage/HomePage';
+
 import './App.css';
+// import getUserInfo from './API/getUserInfo';
 
 function App() {
   const [meds, setMeds] = useState([
@@ -16,6 +16,12 @@ function App() {
     {
       name: 'fugiat',
       time: '08:00',
+      timeTaken: null,
+      taken: false,
+    },
+    {
+      name: 'distinctio',
+      time: '08:23',
       timeTaken: null,
       taken: false,
     },
@@ -57,16 +63,39 @@ function App() {
     },
   ]);
 
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const { data } = await getUserInfo('Xavier_Gleichner98@example.com');
+  //     console.log(data);
+  //   };
+  //   getData();
+  // });
+
   return (
-    <div className="container bg-blue-50 h-full py-6">
+    <div className="container bg-cyan-50 h-full py-6 ">
       <header>
-        <h1 className="text-3xl mb-4">MediAlert*</h1>
+        <h1 className="text-4xl mb-10 text-center tracking-[0.225em] font-bold">
+          MediAlert*
+        </h1>
       </header>
-      <main>
-        <List meds={meds} setMeds={setMeds} />
-      </main>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Router>
     </div>
   );
+
+  // return (
+  //   <div className="container bg-blue-50 h-full py-6">
+  //     <header>
+  //       <h1 className="text-3xl mb-4">MediAlert*</h1>
+  //     </header>
+  //     <main>
+  //       <List meds={meds} setMeds={setMeds} />
+  //     </main>
+  //   </div>
+  // );
 }
 
 export default App;

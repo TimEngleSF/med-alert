@@ -1,5 +1,5 @@
 const connectDB = require('../db/index.cjs');
-const passport = require('passport');
+// const passport = require('passport');
 const { hashPassword } = require('../utils/helpers.cjs');
 let usersCollection;
 // let schedulesCollection;
