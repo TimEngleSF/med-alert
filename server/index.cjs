@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const passport = require('passport');
+// const passport = require('passport');
 const morgan = require('morgan');
 
 require('./strategies/local.cjs');
@@ -26,14 +26,14 @@ const startServer = async () => {
     app.use(express.urlencoded({ extended: true }));
 
     app.use(cookieParser());
-    app.use(
-      session({
-        secret: 'SFSFGDSGSHHSFHFDSDFGHDFHSDFGGSWERTG',
-        resave: false,
-        saveUninitialized: true,
-        store: memoryStore,
-      })
-    );
+    // app.use(
+    //   session({
+    //     secret: 'SFSFGDSGSHHSFHFDSDFGHDFHSDFGGSWERTG',
+    //     resave: false,
+    //     saveUninitialized: true,
+    //     store: memoryStore,
+    //   })
+    // );
 
     app.use(
       cors({
@@ -42,8 +42,8 @@ const startServer = async () => {
       })
     );
 
-    app.use(passport.initialize());
-    app.use(passport.session());
+    // app.use(passport.initialize());
+    // app.use(passport.session());
 
     app.use('/api/auth', authRouter);
     app.use('/api/', router);

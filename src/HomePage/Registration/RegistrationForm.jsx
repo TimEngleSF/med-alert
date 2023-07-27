@@ -41,9 +41,14 @@ const RegistrationForm = ({ setShowRegister }) => {
         navigate(`/user/${response.data.user.username}`);
         userCtx.setUsernameValue(user.username);
         userCtx.setFullNameValue(user.fullNameValue);
-        userCtx.setemailValue(user.email);
+        userCtx.setEmailValue(user.email);
         userCtx.setQrCode(user.qrCode);
         userCtx.setAllergies(user.allergies);
+
+        userCtx.setMedicines(medicines);
+
+        userCtx.setEmergencyContacts(contacts.contacts.emergency);
+        userCtx.setPhysicianContacts(contacts.contacts.physicians);
       }
     } catch (err) {
       console.error(err);

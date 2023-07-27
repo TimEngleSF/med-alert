@@ -67,14 +67,13 @@ module.exports = {
     const responseBody = {
       user: userData,
       medicines: medsData[0].medicines,
-      contacts: contactsData,
+      contacts: contactsData.contacts,
     };
 
     return responseBody;
   },
 
   register: async (reqBody) => {
-    console.log('CGHECK', reqBody);
     const { user, medicines, contacts } = reqBody;
     console.log(user);
     const userDocument = {

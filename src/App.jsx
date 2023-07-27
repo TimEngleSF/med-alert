@@ -22,6 +22,11 @@ function App() {
   useEffect(() => {
     console.log(passwordValue);
   }, [passwordValue]);
+  useEffect(() => {
+    console.log(qrCode);
+    console.log(physicianContacts);
+    console.log(medicines);
+  }, [qrCode]);
 
   return (
     <UserContext.Provider
