@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import LoginForm from './Login/LoginForm';
 import RegistrationForm from './Registration/RegistrationForm';
 const HomePage = () => {
-  const [showRegister, setShowRegister] = useState(false);
+  const [showRegister, setShowRegister] = useState(true);
   useEffect(() => {
     console.log('showRegister: ', showRegister);
   }, [showRegister]);

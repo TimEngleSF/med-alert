@@ -17,7 +17,7 @@ const MedicineInput = ({ medicines, setMedicines }) => {
     setTime(e.target.value);
   };
 
-  const handleMore = () => {
+  const handleAdd = () => {
     if (!medicineValue || !time) {
       return;
     }
@@ -101,9 +101,9 @@ const MedicineInput = ({ medicines, setMedicines }) => {
         <button
           type="button"
           className={`cursor-pointer h-8 w-16 rounded-md outline outline-[#b3a5af] outline-1 text-white bg-[#b3a5af] font-semibold tracking-wider`}
-          onClick={handleMore}
+          onClick={handleAdd}
         >
-          More
+          Add
         </button>
       </div>
     </li>

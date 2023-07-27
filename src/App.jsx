@@ -1,68 +1,21 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import UserContext from './store/user-info-context';
 import HomePage from './HomePage/HomePage';
 
 import './App.css';
 // import getUserInfo from './API/getUserInfo';
 
 function App() {
-  const [meds, setMeds] = useState([
-    {
-      name: 'distinctio',
-      time: '08:00',
-      timeTaken: null,
-      taken: false,
-    },
-    {
-      name: 'fugiat',
-      time: '08:00',
-      timeTaken: null,
-      taken: false,
-    },
-    {
-      name: 'distinctio',
-      time: '08:23',
-      timeTaken: null,
-      taken: false,
-    },
-    {
-      name: 'ea',
-      time: '08:00',
-      timeTaken: null,
-      taken: false,
-    },
-    {
-      name: 'perferendis',
-      time: '16:00',
-      timeTaken: null,
-      taken: false,
-    },
-    {
-      name: 'consequatur',
-      time: '20:00',
-      timeTaken: null,
-      taken: false,
-    },
-    {
-      name: 'est',
-      time: '20:00',
-      timeTaken: null,
-      taken: false,
-    },
-    {
-      name: 'vel',
-      time: '20:00',
-      timeTaken: null,
-      taken: false,
-    },
-    {
-      name: 'quia',
-      time: '22:00',
-      timeTaken: null,
-      taken: false,
-    },
-  ]);
+  /////////BUG SET UP USE CONTEXT!!!!!!
+  const [usernameValue, setUsernameValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
 
+  const [medicines, setMedicines] = useState([]);
+
+  const [emergencyContacts, setEmergencyContacts] = useState([]);
+  const [physicianContacts, setPhysicianContacts] = useState([]);
   // useEffect(() => {
   //   const getData = async () => {
   //     const { data } = await getUserInfo('Xavier_Gleichner98@example.com');
@@ -72,18 +25,37 @@ function App() {
   // });
 
   return (
-    <div className="container bg-cyan-50 h-full py-6 mx-auto max-w-[542px]">
-      <header>
-        <h1 className="text-4xl mb-10 text-center tracking-[0.225em] font-bold">
-          MediAlert*
-        </h1>
-      </header>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </Router>
-    </div>
+    <UserContext.Provider
+      value={{
+        usernameValue: usernameValue,
+        emailValue: emailValue,
+        passwordValue: passwordValue,
+        medicines: medicines,
+        emergencyContacts: emergencyContacts,
+        physicianContacts: physicianContacts,
+
+        setUsernameValue: setUsernameValue,
+        setEmailValue: setEmailValue,
+        setPasswordValue: setPasswordValue,
+        setMedicines: setMedicines,
+        setEmergencyContacts: setEmergencyContacts,
+        setPhysicianContacts: setPhysicianContacts,
+      }}
+    >
+      <div className="container bg-cyan-50 h-full py-6 mx-auto max-w-[542px]">
+        <header>
+          <h1 className="text-4xl mb-10 text-center tracking-[0.225em] font-bold">
+            MediAlert*
+          </h1>
+        </header>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            {/* <Route path="/user/:username" element={<UserPage />} /> */}
+          </Routes>
+        </Router>
+      </div>
+    </UserContext.Provider>
   );
 
   // return (

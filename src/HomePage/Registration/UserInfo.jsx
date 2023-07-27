@@ -2,16 +2,11 @@ import PropTypes from 'prop-types';
 
 import FormInput from '../Utilities/FormInput';
 import Button from '../Utilities/Button';
-const UserInfo = ({
-  usernameValue,
-  emailValue,
-  passwordValue,
-  setUsernameValue,
-  setEmailValue,
-  setPasswordValue,
-  setRegistrationPage,
-  setShowRegister,
-}) => {
+import { useContext } from 'react';
+import UserContext from '../../store/user-info-context';
+const UserInfo = ({ setRegistrationPage, setShowRegister }) => {
+  const userCtx = useContext(UserContext);
+
   const handleChange = (setter) => (e) => {
     setter(e.target.value);
   };
@@ -34,19 +29,19 @@ const UserInfo = ({
         <FormInput
           text="Username"
           type="text"
-          value={usernameValue}
-          onChange={handleChange(setUsernameValue)}
+          value={userCtx.usernameValue}
+          onChange={handleChange(userCtx.setUsernameValue)}
         />
         <FormInput
           text="Email"
           type="email"
-          onChange={handleChange(setEmailValue)}
-          value={emailValue}
+          onChange={handleChange(userCtx.setEmailValue)}
+          value={userCtx.emailValue}
         />
         <FormInput
           text="Password"
           type="password"
-          onChange={setPasswordValue}
+          onChange={userCtx.setPasswordValue}
         />
       </div>
       <div className="flex flex-col gap-4">
@@ -64,13 +59,7 @@ const UserInfo = ({
 };
 
 UserInfo.propTypes = {
-  usernameValue: PropTypes.string,
-  emailValue: PropTypes.string,
-  passwordValue: PropTypes.string,
   setRegistrationPage: PropTypes.func,
-  setUsernameValue: PropTypes.func,
-  setEmailValue: PropTypes.func,
-  setPasswordValue: PropTypes.func,
   setShowRegister: PropTypes.func,
 };
 export default UserInfo;
