@@ -27,10 +27,9 @@ const connectToCollection = async () => {
 connectToCollection();
 
 module.exports = {
-  getAllUserInfo: async (email) => {
-    console.log('CHeck');
+  getAllUserInfo: async (username) => {
     // Get user Info
-    const userData = await usersCollection.findOne({ email: email });
+    const userData = await usersCollection.findOne({ username: username });
     console.log(userData);
     // AggregateMedicine
     const medsCursor = await medicineCollection.aggregate([

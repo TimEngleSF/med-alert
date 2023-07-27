@@ -29,6 +29,14 @@ const ContactsInfo = ({ setRegistrationPage }) => {
     />
   ));
 
+  const physcianEls = userCtx.physicianContacts.map((contact) => (
+    <ContactItems
+      key={contact.name}
+      name={contact.name}
+      email={contact.email}
+    />
+  ));
+
   return (
     <>
       <h2>Add Concacts</h2>
@@ -40,11 +48,19 @@ const ContactsInfo = ({ setRegistrationPage }) => {
       </ul>
       <ul
         className={`py-4 px-2 ${
-          userCtx.emergencyContacts.length > 0 ? 'opacity-1' : 'opacity-0'
+          emergencyEls.length > 0 ? 'opacity-1' : 'opacity-0'
         } duration-300`}
       >
         <span className="font-semibold tracking-wide">EMERGENCY:</span>
         {emergencyEls.length > 0 && emergencyEls}
+      </ul>
+      <ul
+        className={`py-4 px-2 ${
+          physcianEls.length > 0 ? 'opacity-1' : 'opacity-0'
+        } duration-300`}
+      >
+        <span className="font-semibold tracking-wide">Physcian:</span>
+        {physcianEls.length > 0 && physcianEls}
       </ul>
       <div className="flex flex-col gap-4">
         <Button

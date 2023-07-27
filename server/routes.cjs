@@ -15,6 +15,6 @@ const ensureAuthenticated = (req, res, next) => {
   next();
 };
 
-router.get('/userInfo/:email', ensureAuthenticated, Auth.getAllUserInfo);
+router.get('/userInfo/:username', ensureAuthenticated, Auth.getAllUserInfo);
 
 module.exports = router;

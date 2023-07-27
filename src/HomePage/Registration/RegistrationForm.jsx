@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useNavigate, redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import UserContext from '../../store/user-info-context';
 import registerUser from '../../API/registerUser';
@@ -9,8 +9,6 @@ import MedicinceInfo from './Medicine/MedicineInfo';
 import ContactsInfo from './Contacts/ContactInfo';
 
 const RegistrationForm = ({ setShowRegister }) => {
-  // const [usernameValue, setUsernameValue] = useState('');
-
   const [medicines, setMedicines] = useState([]);
 
   const [emergencyContacts, setEmergencyContacts] = useState([]);
@@ -39,7 +37,13 @@ const RegistrationForm = ({ setShowRegister }) => {
     try {
       const response = await registerUser(payload);
       if (response.status === 201) {
+        const { user, medicines, contacts } = response.data;
         navigate(`/user/${response.data.user.username}`);
+        userCtx.setUsernameValue(user.username);
+        userCtx.setFullNameValue(user.fullNameValue);
+        userCtx.setemailValue(user.email);
+        userCtx.setQrCode(user.qrCode);
+        userCtx.setAllergies(user.allergies);
       }
     } catch (err) {
       console.error(err);

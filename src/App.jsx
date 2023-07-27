@@ -12,6 +12,8 @@ function App() {
   const [usernameValue, setUsernameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+  const [qrCode, setQrCode] = useState('');
+  const [allergies, setAllergies] = useState('');
 
   const [medicines, setMedicines] = useState([]);
 
@@ -31,6 +33,8 @@ function App() {
         medicines: medicines,
         emergencyContacts: emergencyContacts,
         physicianContacts: physicianContacts,
+        qrCode: qrCode,
+        allergies: allergies,
 
         setFullNameValue: setFullNameValue,
         setUsernameValue: setUsernameValue,
@@ -39,6 +43,8 @@ function App() {
         setMedicines: setMedicines,
         setEmergencyContacts: setEmergencyContacts,
         setPhysicianContacts: setPhysicianContacts,
+        setQrCode: setQrCode,
+        setAllergies: setAllergies,
       }}
     >
       <div className="container bg-cyan-50 h-full py-6 mx-auto max-w-[542px]">
