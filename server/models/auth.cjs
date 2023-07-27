@@ -1,8 +1,11 @@
+require('dotenv').config();
 const connectDB = require('../db/index.cjs');
 // const passport = require('passport');
 const { hashPassword } = require('../utils/helpers.cjs');
+
+const EX_IP = process.env.EX_IP || '127.0.0.1';
+const EX_PORT = process.env.EX_PORT || '3000';
 let usersCollection;
-// let schedulesCollection;
 let contactsCollection;
 let medicineCollection;
 
@@ -13,7 +16,6 @@ const connectToCollection = async () => {
   try {
     const db = await connectDB();
     usersCollection = db.collection('users');
-    // schedulesCollection = db.collection('schedules');
     contactsCollection = db.collection('contacts');
     medicineCollection = db.collection('medicines');
   } catch (err) {
@@ -73,8 +75,9 @@ module.exports = {
   },
 
   register: async (reqBody) => {
+    console.log('CGHECK', reqBody);
     const { user, medicines, contacts } = reqBody;
-
+    console.log(user);
     const userDocument = {
       name: user.name,
       email: user.email,
@@ -82,8 +85,7 @@ module.exports = {
       password: '',
       authenticated: true,
       authorization: 'user',
-      qrCode:
-        'https://image-charts.com/chart?chs=150x150&cht=qr&chl=http://127.0.0.1:5173&choe=UTF-8',
+      qrCode: `https://image-charts.com/chart?chs=150x150&cht=qr&chl=http://${EX_IP}:${EX_PORT}/${user.username}&choe=UTF-8`,
       allergies: user.allergies,
     };
 

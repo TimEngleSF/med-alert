@@ -49,7 +49,7 @@ const ContactsInfo = ({ setRegistrationPage }) => {
       <div className="flex flex-col gap-4">
         <Button
           text="Next"
-          type="button"
+          type="submit"
           bgColor="bg-red-500"
           textColor="text-white"
           disabled={showNext}

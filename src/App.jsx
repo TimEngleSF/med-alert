@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserContext from './store/user-info-context';
 import HomePage from './HomePage/HomePage';
@@ -8,6 +8,7 @@ import './App.css';
 
 function App() {
   /////////BUG SET UP USE CONTEXT!!!!!!
+  const [fullNameValue, setFullNameValue] = useState('');
   const [usernameValue, setUsernameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -16,17 +17,14 @@ function App() {
 
   const [emergencyContacts, setEmergencyContacts] = useState([]);
   const [physicianContacts, setPhysicianContacts] = useState([]);
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const { data } = await getUserInfo('Xavier_Gleichner98@example.com');
-  //     console.log(data);
-  //   };
-  //   getData();
-  // });
+  useEffect(() => {
+    console.log(passwordValue);
+  }, [passwordValue]);
 
   return (
     <UserContext.Provider
       value={{
+        fullNameValue: fullNameValue,
         usernameValue: usernameValue,
         emailValue: emailValue,
         passwordValue: passwordValue,
@@ -34,6 +32,7 @@ function App() {
         emergencyContacts: emergencyContacts,
         physicianContacts: physicianContacts,
 
+        setFullNameValue: setFullNameValue,
         setUsernameValue: setUsernameValue,
         setEmailValue: setEmailValue,
         setPasswordValue: setPasswordValue,

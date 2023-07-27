@@ -27,6 +27,12 @@ const UserInfo = ({ setRegistrationPage, setShowRegister }) => {
       <h2>Register</h2>
       <div className="text-sm mb-8">
         <FormInput
+          text="Full Name"
+          type="text"
+          value={userCtx.fullNameValue}
+          onChange={handleChange(userCtx.setFullNameValue)}
+        />
+        <FormInput
           text="Username"
           type="text"
           value={userCtx.usernameValue}
@@ -41,7 +47,7 @@ const UserInfo = ({ setRegistrationPage, setShowRegister }) => {
         <FormInput
           text="Password"
           type="password"
-          onChange={userCtx.setPasswordValue}
+          onChange={handleChange(userCtx.setPasswordValue)}
         />
       </div>
       <div className="flex flex-col gap-4">

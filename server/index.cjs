@@ -12,7 +12,7 @@ const router = require('./routes.cjs');
 const authRouter = require('./routes/auth.cjs');
 const connectDb = require('./db/index.cjs');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.EX_PORT || 3000;
 const memoryStore = new session.MemoryStore();
 
 const startServer = async () => {
