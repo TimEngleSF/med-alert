@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-import FormInput from '../Utilities/FormInput';
-import Button from '../Utilities/Button';
+import FormInput from '../../Utilities/FormInput';
+import Button from '../../Utilities/Button';
 import { useContext } from 'react';
 import UserContext from '../../store/user-info-context';
 const UserInfo = ({ setRegistrationPage, setShowRegister }) => {

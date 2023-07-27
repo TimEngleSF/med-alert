@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MedicineItem from './MedicineItem';
 import UserContext from '../../../store/user-info-context';
 
-import Button from '../../Utilities/Button';
+import Button from '../../../Utilities/Button';
 import { useContext } from 'react';
 const MedicinceInfo = ({ setRegistrationPage }) => {
   const userCtx = useContext(UserContext);

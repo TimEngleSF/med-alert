@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import Times from './Times';
+import UserContext from '../../store/user-info-context';
+import { useContext } from 'react';
 
-const List = ({ meds, setMeds }) => {
-  let grouped = meds.reduce((acc, obj) => {
+const MedicineList = () => {
+  const userCtx = useContext(UserContext);
+  console.log(userCtx.medicines);
+  let grouped = userCtx.medicines.reduce((acc, obj) => {
     let key = obj['time'];
     if (!acc[key]) {
       acc[key] = [];
@@ -10,13 +14,14 @@ const List = ({ meds, setMeds }) => {
     acc[key].push(obj);
     return acc;
   }, {});
+  console.log(grouped);
 
   const timeGroups = Object.values(grouped).sort(
     (a, b) => a[0].time < b[0].time
   );
 
   const timeGroupsEl = timeGroups.map((group) => (
-    <Times key={group.time} meds={group} setMeds={setMeds} />
+    <Times key={group.time} meds={group} setMeds={userCtx.setMedicines} />
   ));
 
   //TImed groups is an array of arrays of objects with identical time
@@ -29,8 +34,9 @@ const List = ({ meds, setMeds }) => {
   );
 };
 
-List.propTypes = {
+MedicineList.propTypes = {
   meds: PropTypes.array,
   setMeds: PropTypes.func,
 };
-export default List;
+
+export default MedicineList;

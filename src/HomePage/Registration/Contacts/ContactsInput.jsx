@@ -1,6 +1,6 @@
 import { useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import FormInput from '../../Utilities/FormInput';
+import FormInput from '../../../Utilities/FormInput';
 import UserContext from '../../../store/user-info-context';
 
 const ContactsInput = () => {

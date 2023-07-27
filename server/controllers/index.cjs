@@ -1,4 +1,4 @@
 exports.Auth = require('./Auth.cjs');
 exports.Users = require('./Users.cjs');
-exports.Schedules = require('./Schedules.cjs');
+exports.Medicines = require('./Medicines.cjs');
 exports.Contacts = require('./Contacts.cjs');

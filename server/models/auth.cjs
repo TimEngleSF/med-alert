@@ -30,7 +30,6 @@ module.exports = {
   getAllUserInfo: async (username) => {
     // Get user Info
     const userData = await usersCollection.findOne({ username: username });
-    console.log(userData);
     // AggregateMedicine
     const medsCursor = await medicineCollection.aggregate([
       {
@@ -75,7 +74,6 @@ module.exports = {
 
   register: async (reqBody) => {
     const { user, medicines, contacts } = reqBody;
-    console.log(user);
     const userDocument = {
       name: user.name,
       email: user.email,
@@ -83,7 +81,7 @@ module.exports = {
       password: '',
       authenticated: true,
       authorization: 'user',
-      qrCode: `https://image-charts.com/chart?chs=150x150&cht=qr&chl=http://${EX_IP}:${EX_PORT}/${user.username}&choe=UTF-8`,
+      qrCode: `https://image-charts.com/chart?chs=150x150&cht=qr&chl=http://${EX_IP}:${EX_PORT}/user/${user.username}&choe=UTF-8`,
       allergies: user.allergies,
     };
 

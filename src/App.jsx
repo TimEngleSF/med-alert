@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserContext from './store/user-info-context';
 import HomePage from './HomePage/HomePage';
+import UserPage from './User/UserPage';
 
 import './App.css';
 // import getUserInfo from './API/getUserInfo';
@@ -19,14 +20,6 @@ function App() {
 
   const [emergencyContacts, setEmergencyContacts] = useState([]);
   const [physicianContacts, setPhysicianContacts] = useState([]);
-  useEffect(() => {
-    console.log(passwordValue);
-  }, [passwordValue]);
-  useEffect(() => {
-    console.log(qrCode);
-    console.log(physicianContacts);
-    console.log(medicines);
-  }, [qrCode]);
 
   return (
     <UserContext.Provider
@@ -61,7 +54,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            {/* <Route path="/user/:username" element={<UserPage />} /> */}
+            <Route path="/user/:username" element={<UserPage />} />
           </Routes>
         </Router>
       </div>

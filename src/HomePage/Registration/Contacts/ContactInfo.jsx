@@ -4,7 +4,7 @@ import ContactsInput from './ContactsInput';
 import ContactItems from './ContactItem';
 import UserContext from '../../../store/user-info-context';
 
-import Button from '../../Utilities/Button';
+import Button from '../../../Utilities/Button';
 const ContactsInfo = ({ setRegistrationPage }) => {
   const [showNext, setShowNext] = useState(true);
   const userCtx = useContext(UserContext);
