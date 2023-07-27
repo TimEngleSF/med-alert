@@ -14,10 +14,10 @@ const MedicineList = () => {
     return acc;
   }, {});
 
+  console.log('Grouped', grouped);
   const timeGroups = Object.values(grouped).sort(
     (a, b) => a[0].time < b[0].time
   );
-
   const timeGroupsEl = timeGroups.map((group) => (
     <Times key={group.time} meds={group} setMeds={userCtx.setMedicines} />
   ));
@@ -26,7 +26,7 @@ const MedicineList = () => {
 
   // console.log(medicationTimes);
   return (
-    <section className="bg-slate-600 w-[90%] mx-auto">
+    <section className="bg-red-500 w-[90%] mx-auto">
       <ul>{timeGroupsEl}</ul>
     </section>
   );

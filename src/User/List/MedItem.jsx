@@ -1,6 +1,13 @@
 // import { FaCheck } from 'react-icons/fa6';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import {
+  formatDistance,
+  startOfDay,
+  parse,
+  differenceInMinutes,
+} from 'date-fns';
+
 import UserContext from '../../store/user-info-context';
 import { useContext } from 'react';
 
@@ -33,9 +40,9 @@ const MedItem = ({ med, setMeds }) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-6 h-6"
+      strokeWidth={5}
+      stroke="red"
+      className="w-8 h-8"
     >
       <path
         strokeLinecap="round"
@@ -45,9 +52,39 @@ const MedItem = ({ med, setMeds }) => {
     </svg>
   );
 
-  // const = handleUpdate
+  const timeDifference = () =>
+    formatDistance(new Date(), new Date(med.timeTaken));
+
+  function getTimePastMidnight() {
+    const time = parse(med.time, 'HH:mm', new Date());
+
+    const midnight = startOfDay(new Date());
+
+    const diff = differenceInMinutes(time, midnight);
+
+    return diff;
+  }
+  const medLate = () => {
+    return getTimePastMidnight() >= 5;
+  };
+  console.log(getTimePastMidnight, medLate);
+  // Eventually we need to set all items to false that were taken before today
+  const isBeforeToday = () => {};
+
+  const timeUntilMed = () => {
+    const time = parse(med.time, 'HH:mm', new Date());
+    const difference = differenceInMinutes(time, new Date());
+    return difference;
+  };
+
+  const validToTakeMed = () => {
+    return timeUntilMed() <= 30;
+  };
 
   const handleUpdate = () => {
+    if (!validToTakeMed()) {
+      return;
+    }
     const updatedBoolean = !med.taken;
 
     axios({
@@ -59,23 +96,58 @@ const MedItem = ({ med, setMeds }) => {
       if (!updatedBoolean) {
         updatedMed = { ...response.data.value, timeTaken: null };
       }
+
       userCtx.setMedicines((prevState) =>
         prevState.map((medicine) =>
-          medicine._id === updatedMed._id ? updatedMed : med
+          medicine._id === updatedMed._id ? updatedMed : medicine
         )
       );
     });
-    // then update medicines array with the returned updated object
+
     // set up checkmark to change
     // set up time from timeTaken property using date-fns,
   };
   return (
-    <li className="bg-blue-100 py-2 rounded-lg" onClick={handleUpdate}>
-      <div className="flex items-center justify-between px-4 mb-2">
-        <span className="uppercase">{med.name}</span>
-        {checkmark}
+    <li
+      className={`flex flex-col mx-4 justify-center bg-red-100 h-32 py-2 rounded-lg shadow-lg ${
+        validToTakeMed()
+          ? 'cursor-pointer opacity-100'
+          : 'cursor-not-allowed opacity-50'
+      }`}
+      onClick={handleUpdate}
+    >
+      <div className="flex items-center justify-between h-3/4 px-4 mb-2">
+        <span className="uppercase font-semibold tracking-widest text-xl">
+          {med.name}
+        </span>
+        <div className="flex">
+          <div
+            className={`${
+              med.taken ? 'opacity-100' : 'opacity-0'
+            } duration-300`}
+          >
+            {checkmark}
+          </div>
+          <div
+            className={`${
+              !med.taken && !medLate() ? 'opacity-100' : 'opacity-0'
+            } duration-300`}
+          >
+            {cross}
+          </div>
+        </div>
       </div>
-      <span className="w-full text-end inline-block">3min ago</span>
+      <div
+        className={`h-1/4 px-4 ${
+          med.taken ? 'opacity-100' : 'opacity-0'
+        } duration-300`}
+      >
+        {med.taken && (
+          <span className="w-full text-end inline-block italic">
+            Taken {timeDifference()} ago
+          </span>
+        )}
+      </div>
     </li>
   );
 };
@@ -85,6 +157,7 @@ MedItem.propTypes = {
     name: PropTypes.string,
     taken: PropTypes.bool,
     _id: PropTypes.string,
+    timeTaken: PropTypes.string,
   }),
   setMeds: PropTypes.func,
 };

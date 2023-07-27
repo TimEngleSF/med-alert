@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserContext from './store/user-info-context';
 import HomePage from './HomePage/HomePage';
 import UserPage from './User/UserPage';
+import QRModal from './QRModal';
+import ContactsModal from './ContactsModal';
 
 import './App.css';
 // import getUserInfo from './API/getUserInfo';
@@ -21,6 +23,9 @@ function App() {
   const [emergencyContacts, setEmergencyContacts] = useState([]);
   const [physicianContacts, setPhysicianContacts] = useState([]);
 
+  const [showQR, setShowQR] = useState(false);
+  const [showContacts, setShowContacts] = useState(true);
+
   return (
     <UserContext.Provider
       value={{
@@ -33,6 +38,8 @@ function App() {
         physicianContacts: physicianContacts,
         qrCode: qrCode,
         allergies: allergies,
+        showQR: showQR,
+        showContacts: showContacts,
 
         setFullNameValue: setFullNameValue,
         setUsernameValue: setUsernameValue,
@@ -43,20 +50,19 @@ function App() {
         setPhysicianContacts: setPhysicianContacts,
         setQrCode: setQrCode,
         setAllergies: setAllergies,
+        setShowQR: setShowQR,
+        setShowContacts: setShowContacts,
       }}
     >
       <div className="container bg-cyan-50 h-full py-6 mx-auto max-w-[542px]">
-        <header>
-          <h1 className="text-4xl mb-10 text-center tracking-[0.225em] font-bold">
-            MediAlert*
-          </h1>
-        </header>
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/user/:username" element={<UserPage />} />
           </Routes>
         </Router>
+        {showQR && <QRModal />}
+        {showContacts && <ContactsModal />}
       </div>
     </UserContext.Provider>
   );

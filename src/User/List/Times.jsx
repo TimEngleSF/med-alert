@@ -29,10 +29,9 @@ const Times = ({ meds, setMeds }) => {
 
   return (
     <li className="timeContainer">
-      {/* WHEN I CODE NEXT I NEED TO MAKE A LARGER LIST OF MEDICATIONS */}
       <span>{convertToAmPm(meds[0].time)}</span>
       <ul
-        className={`timesContainer ${meds[0].time} bg-slate-300 flex flex-col gap-5 py-5 `}
+        className={`timesContainer ${meds[0].time} bg-white flex flex-col gap-5 py-5 `}
       >
         {medItemsEl}
       </ul>

@@ -5,10 +5,17 @@ const HomePage = () => {
   const [showRegister, setShowRegister] = useState(true);
 
   return (
-    <main className="flex justify-center items-center">
-      {!showRegister && <LoginForm setShowRegister={setShowRegister} />}
-      {showRegister && <RegistrationForm setShowRegister={setShowRegister} />}
-    </main>
+    <>
+      <header>
+        <h1 className="text-4xl mb-10 text-center tracking-[0.225em] font-bold">
+          MediAlert*
+        </h1>
+      </header>
+      <main className="flex justify-center items-center">
+        {!showRegister && <LoginForm setShowRegister={setShowRegister} />}
+        {showRegister && <RegistrationForm setShowRegister={setShowRegister} />}
+      </main>
+    </>
   );
 };
 

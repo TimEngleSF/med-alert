@@ -10,14 +10,12 @@ const UserPage = () => {
   const [requestData, setRequestData] = useState(null);
   const userCtx = useContext(UserContext);
   const { username } = useParams();
-  console.log(username);
   useEffect(() => {
     axios({
       method: 'GET',
       url: `http://127.0.0.1:3000/api/userInfo/${username}`,
     }).then((response) => {
       const { user, medicines, contacts } = response.data;
-      console.log(user, medicines, contacts);
       userCtx.setUsernameValue(user.username);
       userCtx.setFullNameValue(user.fullNameValue);
       userCtx.setEmailValue(user.email);
@@ -47,12 +45,39 @@ const UserPage = () => {
       );
     }
   }, []);
-
+  const handleQRClick = () => {
+    userCtx.setShowQR(true);
+  };
+  const handleContactsClick = () => {
+    userCtx.setShowContacts(true);
+  };
   return (
-    <main>
-      <MedicineList />
-      <img src={userCtx.qrCode}></img>
-    </main>
+    <>
+      <header className="flex justify-between mb-10">
+        <h1 className="text-xl tracking-[0.225em] font-bold">MediAlert*</h1>
+        <ul className=" flex gap-10">
+          <li>
+            <a
+              className=" text-lg text-red-500 cursor-pointer hover:text-red-600 hover:border-b-2 border-b-red-600 hover:py-0.5 duration-300"
+              onClick={handleQRClick}
+            >
+              QR
+            </a>
+          </li>
+          <li>
+            <a
+              className=" text-lg text-red-500 cursor-pointer hover:text-red-600 hover:border-b-2 border-b-red-600 hover:py-0.5 duration-300"
+              onClick={handleContactsClick}
+            >
+              CONTACTS
+            </a>
+          </li>
+        </ul>
+      </header>
+      <main>
+        <MedicineList />
+      </main>
+    </>
   );
 };
 export default UserPage;
