@@ -5,7 +5,6 @@ import { useContext } from 'react';
 
 const MedicineList = () => {
   const userCtx = useContext(UserContext);
-  console.log(userCtx.medicines);
   let grouped = userCtx.medicines.reduce((acc, obj) => {
     let key = obj['time'];
     if (!acc[key]) {
@@ -14,7 +13,6 @@ const MedicineList = () => {
     acc[key].push(obj);
     return acc;
   }, {});
-  console.log(grouped);
 
   const timeGroups = Object.values(grouped).sort(
     (a, b) => a[0].time < b[0].time

@@ -31,22 +31,6 @@ const UserPage = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   getUserInfo(username).then((response) => {
-  //     const { user, medicines, contacts } = response.data;
-  //     console.log(user, medicines, contacts);
-  //     userCtx.setUsernameValue(user.username);
-  //     userCtx.setFullNameValue(user.fullNameValue);
-  //     userCtx.setEmailValue(user.email);
-  //     userCtx.setQrCode(user.qrCode);
-  //     userCtx.setAllergies(user.allergies);
-
-  //     userCtx.setMedicines(medicines);
-
-  //     userCtx.setEmergencyContacts(contacts.emergency);
-  //     userCtx.setPhysicianContacts(contacts.physicians);
-  //   });
-  // }, []);
   useContext(() => {
     if (!userCtx.username) {
       return (
