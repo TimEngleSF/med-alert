@@ -106,9 +106,9 @@ const MedItem = ({ med, setMeds }) => {
   };
   return (
     <li
-      className={`flex flex-col mx-4 justify-center ${
-        !med.taken && isFiveMinutesPast() ? 'bg-red-300' : 'bg-red-100'
-      } ${med.taken ? 'bg-green-300' : ''} h-32 py-2 rounded-lg shadow-lg ${
+      className={`flex flex-col mx-4 justify-center  ${
+        med.taken ? 'bg-green-300' : 'bg-red-100'
+      } h-32 py-2 rounded-lg shadow-lg ${
         validToTakeMed()
           ? 'cursor-pointer opacity-100'
           : 'cursor-not-allowed opacity-50'

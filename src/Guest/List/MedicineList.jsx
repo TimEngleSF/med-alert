@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { parse } from 'date-fns';
 import Times from './Times';
 import UserContext from '../../store/user-info-context';
 import { useContext } from 'react';
@@ -15,9 +16,12 @@ const MedicineList = () => {
   }, {});
 
   console.log('Grouped', grouped);
-  const timeGroups = Object.values(grouped).sort(
-    (a, b) => a[0].time < b[0].time
-  );
+  const timeGroups = Object.values(grouped).sort((a, b) => {
+    const timeA = parse(a[0].time, 'HH:mm', new Date());
+    const timeB = parse(b[0].time, 'HH:mm', new Date());
+
+    return timeA - timeB;
+  });
   const timeGroupsEl = timeGroups.map((group) => (
     <Times key={group.time} meds={group} setMeds={userCtx.setMedicines} />
   ));
