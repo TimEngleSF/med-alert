@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Dna } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -6,7 +6,6 @@ import UserContext from '../store/user-info-context';
 import MedicineList from './List/MedicineList';
 
 const GuestPage = () => {
-  const [requestData, setRequestData] = useState(null);
   const userCtx = useContext(UserContext);
   const { username } = useParams();
   useEffect(() => {
@@ -52,7 +51,7 @@ const GuestPage = () => {
   };
   return (
     <>
-      <header className="flex justify-between mb-10">
+      <header className="flex justify-between mb-10 px-3">
         <h1 className="text-xl tracking-[0.225em] font-bold">MediAlert*</h1>
         <ul className=" flex gap-10">
           <li>

@@ -1,6 +1,4 @@
-// import { FaCheck } from 'react-icons/fa6';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import {
   formatDistance,
   startOfDay,
@@ -8,14 +6,7 @@ import {
   differenceInMinutes,
 } from 'date-fns';
 
-import UserContext from '../../store/user-info-context';
-import { useContext } from 'react';
-
-const IP = import.meta.env.VITE_APP_SIP;
-const PORT = import.meta.env.VITE_APP_SPORT;
-
-const MedItem = ({ med, setMeds }) => {
-  const userCtx = useContext(UserContext);
+const MedItem = ({ med }) => {
   const checkmark = (
     <i>
       <svg
@@ -91,42 +82,13 @@ const MedItem = ({ med, setMeds }) => {
     return timeUntilMed() <= 30;
   };
 
-  // const handleUpdate = () => {
-  //   if (!validToTakeMed()) {
-  //     return;
-  //   }
-  //   const updatedBoolean = !med.taken;
-
-  //   axios({
-  //     method: 'PUT',
-  //     url: `http://${IP}:${PORT}/api/medicines`,
-  //     data: { id: med._id, boolean: updatedBoolean },
-  //   }).then((response) => {
-  //     let updatedMed = response.data.value;
-  //     if (!updatedBoolean) {
-  //       updatedMed = { ...response.data.value, timeTaken: null };
-  //     }
-
-  //     userCtx.setMedicines((prevState) =>
-  //       prevState.map((medicine) =>
-  //         medicine._id === updatedMed._id ? updatedMed : medicine
-  //       )
-  //     );
-  //   });
-
-  // set up checkmark to change
-  // set up time from timeTaken property using date-fns,
-  // };
   return (
     <li
       className={`flex flex-col mx-4 justify-center ${
         !med.taken && isFiveMinutesPast() ? 'bg-red-300' : 'bg-red-100'
       } ${med.taken ? 'bg-green-300' : ''} h-32 py-2 rounded-lg shadow-lg ${
-        validToTakeMed()
-          ? 'cursor-pointer opacity-100'
-          : 'cursor-not-allowed opacity-50'
+        validToTakeMed() ? ' opacity-100' : ' opacity-50'
       }`}
-      // onClick={handleUpdate}
     >
       <div className="flex items-center justify-between h-3/4 px-4 mb-2">
         <span className="uppercase font-semibold tracking-widest text-xl">
