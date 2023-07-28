@@ -1,14 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const controllers = require('./controllers/index.cjs');
+const { Auth, Medicines } = require('./controllers/index.cjs');
+// const passport = require('passport');
 
-router.get('/user', controllers.Users.getUser);
-router.post('/user', controllers.Users.postUser);
+// const ensureAuthenticated = (req, res, next) => {
+//   console.log('check');
+//   console.log(req.headers);
+//   if (req.isAuthenticated()) {
+//     console.log('hello!', req.user.email);
+//     return next();
+//   }
+//   console.log('Authenticated? ', req.isAuthenticated());
+//   res.status(400);
+//   next();
+// };
 
-router.get('/scheds', controllers.Schedules.getSchedule);
-router.post('/scheds', controllers.Schedules.postSchedule);
+router.get('/userInfo/:username', Auth.getAllUserInfo);
 
-router.get('/contacts', controllers.Contacts.getContacts);
-router.post('/contacts', controllers.Contacts.postContacts);
+router.put('/medicines', Medicines.updateTaken);
 
 module.exports = router;

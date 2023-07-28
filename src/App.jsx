@@ -1,35 +1,84 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import UserContext from './store/user-info-context';
+import HomePage from './HomePage/HomePage';
+import UserPage from './User/UserPage';
+import QRModal from './QRModal';
+import ContactsModal from './ContactsModal';
+
 import './App.css';
+import GuestPage from './Guest/GuestPage';
+// import getUserInfo from './API/getUserInfo';
 
 function App() {
-  const [count, setCount] = useState(0);
+  /////////BUG SET UP USE CONTEXT!!!!!!
+  const [fullNameValue, setFullNameValue] = useState('');
+  const [usernameValue, setUsernameValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+  const [qrCode, setQrCode] = useState('');
+  const [allergies, setAllergies] = useState('');
+
+  const [medicines, setMedicines] = useState([]);
+
+  const [emergencyContacts, setEmergencyContacts] = useState([]);
+  const [physicianContacts, setPhysicianContacts] = useState([]);
+
+  const [showQR, setShowQR] = useState(false);
+  const [showContacts, setShowContacts] = useState(false);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <UserContext.Provider
+      value={{
+        fullNameValue: fullNameValue,
+        usernameValue: usernameValue,
+        emailValue: emailValue,
+        passwordValue: passwordValue,
+        medicines: medicines,
+        emergencyContacts: emergencyContacts,
+        physicianContacts: physicianContacts,
+        qrCode: qrCode,
+        allergies: allergies,
+        showQR: showQR,
+        showContacts: showContacts,
+
+        setFullNameValue: setFullNameValue,
+        setUsernameValue: setUsernameValue,
+        setEmailValue: setEmailValue,
+        setPasswordValue: setPasswordValue,
+        setMedicines: setMedicines,
+        setEmergencyContacts: setEmergencyContacts,
+        setPhysicianContacts: setPhysicianContacts,
+        setQrCode: setQrCode,
+        setAllergies: setAllergies,
+        setShowQR: setShowQR,
+        setShowContacts: setShowContacts,
+      }}
+    >
+      <div className="container bg-cyan-50 h-full py-6 mx-auto max-w-[542px]">
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/user/:username" element={<UserPage />} />
+            <Route path="/user/:username/guest" element={<GuestPage />} />
+          </Routes>
+        </Router>
+        {showQR && <QRModal />}
+        {showContacts && <ContactsModal />}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </UserContext.Provider>
   );
+
+  // return (
+  //   <div className="container bg-blue-50 h-full py-6">
+  //     <header>
+  //       <h1 className="text-3xl mb-4">MediAlert*</h1>
+  //     </header>
+  //     <main>
+  //       <List meds={meds} setMeds={setMeds} />
+  //     </main>
+  //   </div>
+  // );
 }
 
 export default App;
