@@ -24,7 +24,7 @@ const RegistrationForm = ({ setShowRegister }) => {
     const payload = {
       user: {
         name: userCtx.fullNameValue,
-        username: userCtx.usernameValue,
+        username: userCtx.usernameValue.toLowerCase(),
         email: userCtx.emailValue,
         password: userCtx.passwordValue,
       },
@@ -38,7 +38,7 @@ const RegistrationForm = ({ setShowRegister }) => {
       const response = await registerUser(payload);
       if (response.status === 201) {
         const { user, medicines, contacts } = response.data;
-        navigate(`/user/${response.data.user.username}`);
+        navigate(`/user/${response.data.user.username.toLowerCase()}`);
         userCtx.setUsernameValue(user.username);
         userCtx.setFullNameValue(user.fullNameValue);
         userCtx.setEmailValue(user.email);

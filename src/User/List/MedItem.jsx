@@ -6,6 +6,7 @@ import {
   startOfDay,
   parse,
   differenceInMinutes,
+  getMinutes,
 } from 'date-fns';
 
 import UserContext from '../../store/user-info-context';
@@ -55,20 +56,16 @@ const MedItem = ({ med, setMeds }) => {
   const timeDifference = () =>
     formatDistance(new Date(), new Date(med.timeTaken));
 
-  function getTimePastMidnight() {
-    const time = parse(med.time, 'HH:mm', new Date());
+  function isFiveMinutesPast() {
+    const givenTime = parse(med.time, 'HH:mm', new Date());
 
-    const midnight = startOfDay(new Date());
+    const now = new Date();
 
-    const diff = differenceInMinutes(time, midnight);
+    const diff = differenceInMinutes(now, givenTime);
 
-    return diff;
+    return diff > 5;
   }
-  const medLate = () => {
-    return getTimePastMidnight() >= 5;
-  };
-  console.log(getTimePastMidnight, medLate);
-  // Eventually we need to set all items to false that were taken before today
+
   const isBeforeToday = () => {};
 
   const timeUntilMed = () => {
@@ -109,7 +106,9 @@ const MedItem = ({ med, setMeds }) => {
   };
   return (
     <li
-      className={`flex flex-col mx-4 justify-center bg-red-100 h-32 py-2 rounded-lg shadow-lg ${
+      className={`flex flex-col mx-4 justify-center ${
+        !med.taken && isFiveMinutesPast() ? 'bg-red-300' : 'bg-red-100'
+      } ${med.taken ? 'bg-green-300' : ''} h-32 py-2 rounded-lg shadow-lg ${
         validToTakeMed()
           ? 'cursor-pointer opacity-100'
           : 'cursor-not-allowed opacity-50'
@@ -130,7 +129,7 @@ const MedItem = ({ med, setMeds }) => {
           </div>
           <div
             className={`${
-              !med.taken && !medLate() ? 'opacity-100' : 'opacity-0'
+              !med.taken && isFiveMinutesPast() ? 'opacity-100' : 'opacity-0'
             } duration-300`}
           >
             {cross}

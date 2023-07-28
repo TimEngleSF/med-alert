@@ -26,7 +26,7 @@ const MedicineList = () => {
 
   // console.log(medicationTimes);
   return (
-    <section className="bg-red-500 w-[90%] mx-auto">
+    <section className=" w-[90%] mx-auto">
       <ul>{timeGroupsEl}</ul>
     </section>
   );

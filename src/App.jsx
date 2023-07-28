@@ -7,6 +7,7 @@ import QRModal from './QRModal';
 import ContactsModal from './ContactsModal';
 
 import './App.css';
+import GuestPage from './Guest/GuestPage';
 // import getUserInfo from './API/getUserInfo';
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
   const [physicianContacts, setPhysicianContacts] = useState([]);
 
   const [showQR, setShowQR] = useState(false);
-  const [showContacts, setShowContacts] = useState(true);
+  const [showContacts, setShowContacts] = useState(false);
 
   return (
     <UserContext.Provider
@@ -59,6 +60,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/user/:username" element={<UserPage />} />
+            <Route path="/user/:username/guest" element={<GuestPage />} />
           </Routes>
         </Router>
         {showQR && <QRModal />}

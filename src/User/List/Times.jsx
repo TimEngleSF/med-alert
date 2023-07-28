@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { parse, format } from 'date-fns';
 import UserContext from '../../store/user-info-context';
 import MedItem from './MedItem';
 
@@ -10,28 +11,24 @@ const Times = ({ meds, setMeds }) => {
     <MedItem key={med.name} med={med} setMeds={userCtx.setMedicines} />
   ));
 
+  const medsTaken = meds.every((med) => med.taken);
+
   function convertToAmPm(time24hr) {
-    const [hour, minute] = time24hr.split(':');
-    let amPm = 'AM';
-    let hour12hr = parseInt(hour);
+    const date = parse(time24hr, 'HH:mm', new Date());
+    const timeInAMPM = format(date, 'hh:mm a');
 
-    if (hour12hr >= 12) {
-      amPm = 'PM';
-      hour12hr = hour12hr === 12 ? 12 : hour12hr - 12;
-    }
-
-    if (hour12hr === 0) {
-      hour12hr = 12;
-    }
-
-    return `${hour12hr}:${minute} ${amPm}`;
+    return timeInAMPM;
   }
 
   return (
-    <li className="timeContainer">
-      <span>{convertToAmPm(meds[0].time)}</span>
+    <li
+      className={`timeContainer bg-white py-5 mb-6 shadow-md rounded-lg ${
+        medsTaken ? 'opacity-60' : 'opacity-100'
+      } duration-300`}
+    >
+      <span className="text-xl px-3">{convertToAmPm(meds[0].time)}</span>
       <ul
-        className={`timesContainer ${meds[0].time} bg-white flex flex-col gap-5 py-5 `}
+        className={`timesContainer ${meds[0].time} flex flex-col gap-5 py-5 `}
       >
         {medItemsEl}
       </ul>
