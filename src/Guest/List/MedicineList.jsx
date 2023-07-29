@@ -28,7 +28,6 @@ const MedicineList = () => {
 
   //TImed groups is an array of arrays of objects with identical time
 
-  // console.log(medicationTimes);
   return (
     <section className=" w-[90%] mx-auto">
       <ul>{timeGroupsEl}</ul>

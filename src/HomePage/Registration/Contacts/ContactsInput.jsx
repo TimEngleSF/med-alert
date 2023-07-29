@@ -10,7 +10,6 @@ const ContactsInput = () => {
   const [contactType, setContactType] = useState('');
   const inputRef = useRef(0);
   const userCtx = useContext(UserContext);
-  console.log('yes,', userCtx.emergencyContacts);
 
   const handleChange = (setter) => (e) => {
     setter(e.target.value);

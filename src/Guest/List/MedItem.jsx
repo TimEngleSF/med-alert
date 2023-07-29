@@ -56,6 +56,10 @@ const MedItem = ({ med }) => {
     return diff > 5;
   }
 
+  const isLate = () => {
+    return isFiveMinutesPast() && !med.taken;
+  };
+
   function getTimePastMidnight() {
     const time = parse(med.time, 'HH:mm', new Date());
 
@@ -68,7 +72,6 @@ const MedItem = ({ med }) => {
   const medLate = () => {
     return getTimePastMidnight() >= 5;
   };
-  console.log(getTimePastMidnight, medLate);
   // Eventually we need to set all items to false that were taken before today
   const isBeforeToday = () => {};
 
@@ -84,12 +87,10 @@ const MedItem = ({ med }) => {
 
   return (
     <li
-      className={`flex flex-col mx-4 justify-center ${
-        !med.taken && isFiveMinutesPast() ? 'bg-red-300' : 'bg-red-100'
-      } ${
-        med.taken ? 'bg-green-300' : 'bg-red-300'
-      } h-32 py-2 rounded-lg shadow-lg ${
-        validToTakeMed() ? ' opacity-100' : ' opacity-50'
+      className={`flex flex-col mx-4 justify-center  ${
+        med.taken ? 'bg-green-300' : 'bg-red-100'
+      } ${isLate() ? 'bg-red-300' : ''} h-32 py-2 rounded-lg shadow-lg ${
+        validToTakeMed() ? 'opacity-100' : 'opacity-50'
       }`}
     >
       <div className="flex items-center justify-between h-3/4 px-4 mb-2">

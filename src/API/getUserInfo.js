@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const getUserInfo = async (username) => {
-  console.log(username);
   try {
     const data = await axios({
       method: 'GET',

@@ -34,7 +34,6 @@ module.exports = {
         },
         { returnDocument: 'after' }
       );
-      console.log(data[0]);
       return data;
     } catch (err) {
       console.error(err);

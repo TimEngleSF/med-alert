@@ -12,7 +12,6 @@ const UserInfo = ({ setRegistrationPage, setShowRegister }) => {
   };
 
   const handleLoginClick = () => {
-    console.log('Clicked');
     setShowRegister(false);
   };
 
