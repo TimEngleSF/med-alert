@@ -5,6 +5,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 // const passport = require('passport');
 const morgan = require('morgan');
+const nodeCron = require('./notification/notifyContact.cjs');
 
 require('./strategies/local.cjs');
 const router = require('./routes.cjs');
@@ -45,4 +46,5 @@ const startServer = async () => {
   }
 };
 
+nodeCron.cron;
 startServer();
