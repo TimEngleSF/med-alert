@@ -8,7 +8,6 @@ const MedicineInput = ({ medicines, setMedicines }) => {
   const inputRef = useRef(0);
   const selectRef = useRef();
   // const [medicines, setMedicines] = useState([]);
-  console.log(medicines);
   const handleMedChange = (e) => {
     setMedicineValue(e.target.value);
   };

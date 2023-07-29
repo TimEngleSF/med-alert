@@ -56,7 +56,7 @@ const MedItem = ({ med, setMeds }) => {
   const timeDifference = () =>
     formatDistance(new Date(), new Date(med.timeTaken));
 
-  function isFiveMinutesPast() {
+  const isFiveMinutesPast = () => {
     const givenTime = parse(med.time, 'HH:mm', new Date());
 
     const now = new Date();
@@ -64,8 +64,11 @@ const MedItem = ({ med, setMeds }) => {
     const diff = differenceInMinutes(now, givenTime);
 
     return diff > 5;
-  }
+  };
 
+  const isLate = () => {
+    return isFiveMinutesPast() && !med.taken;
+  };
   const isBeforeToday = () => {};
 
   const timeUntilMed = () => {
@@ -108,7 +111,7 @@ const MedItem = ({ med, setMeds }) => {
     <li
       className={`flex flex-col mx-4 justify-center  ${
         med.taken ? 'bg-green-300' : 'bg-red-100'
-      } h-32 py-2 rounded-lg shadow-lg ${
+      } ${isLate() ? 'bg-red-300' : ''} h-32 py-2 rounded-lg shadow-lg ${
         validToTakeMed()
           ? 'cursor-pointer opacity-100'
           : 'cursor-not-allowed opacity-50'

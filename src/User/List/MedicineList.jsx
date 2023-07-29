@@ -25,14 +25,11 @@ const MedicineList = () => {
     return timeA - timeB;
   });
 
-  console.log('Grouped', timeGroups);
   const timeGroupsEl = timeGroups.map((group) => (
     <Times key={group.time} meds={group} setMeds={userCtx.setMedicines} />
   ));
-  console.log(timeGroups);
   //TImed groups is an array of arrays of objects with identical time
 
-  // console.log(medicationTimes);
   return (
     <section className=" w-[90%] mx-auto">
       <ul>{timeGroupsEl}</ul>

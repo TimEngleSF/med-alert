@@ -16,21 +16,18 @@ const LoginForm = ({ setShowRegister }) => {
     if (!emailValue || !passwordValue) {
       return;
     }
-    console.log('Hello');
     loginAccount();
   };
 
   const loginAccount = async () => {
     try {
-      console.log('Hello!');
       const data = await axios({
         method: 'POST',
         url: 'http://127.0.0.1:3000/api/auth/login',
         data: { email: emailValue, password: passwordValue },
       });
-      console.log(data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
