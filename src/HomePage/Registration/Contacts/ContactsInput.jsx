@@ -48,7 +48,7 @@ const ContactsInput = () => {
         <FormInput
           text={'Email'}
           onChange={handleChange(setEmailValue)}
-          type="email"
+          type="text"
         />
         <FormInput
           text={'Phone Number'}
