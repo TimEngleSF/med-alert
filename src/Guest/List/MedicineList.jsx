@@ -15,7 +15,6 @@ const MedicineList = () => {
     return acc;
   }, {});
 
-  console.log('Grouped', grouped);
   const timeGroups = Object.values(grouped).sort((a, b) => {
     const timeA = parse(a[0].time, 'HH:mm', new Date());
     const timeB = parse(b[0].time, 'HH:mm', new Date());

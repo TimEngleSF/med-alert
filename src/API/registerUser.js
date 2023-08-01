@@ -9,7 +9,6 @@ const registerUser = async (payload) => {
       url: `http://${IP}:${PORT}/api/auth/register`,
       data: payload,
     });
-    console.log(response);
     return response;
   } catch (err) {
     console.error('Error making request:', err.message);

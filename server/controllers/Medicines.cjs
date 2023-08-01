@@ -9,7 +9,6 @@ module.exports = {
       res.send(data);
     } catch (err) {
       console.error(err);
-      throw err;
     }
   },
 };
