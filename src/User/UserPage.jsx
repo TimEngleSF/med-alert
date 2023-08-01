@@ -4,18 +4,37 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../store/user-info-context';
 import MedicineList from './List/MedicineList';
-import getUserInfo from '../API/getUserInfo';
 
+const IP = import.meta.env.VITE_APP_SIP;
+const PORT = import.meta.env.VITE_APP_SPORT;
+
+//  TODO NEED TO ADD AUTHENTICATION FOR THESE REQUESTS, REMEMBER WE NEED THEM FOR THE UPDATES AS WELL
 const UserPage = () => {
-  const [requestData, setRequestData] = useState(null);
   const userCtx = useContext(UserContext);
   const { username } = useParams();
+
+  // Load JWT token from local storage
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: `http://127.0.0.1:3000/api/userInfo/${username}`,
-    }).then((response) => {
+    const storedToken = localStorage.getItem('jwt');
+    let tokenToConsume;
+    if (storedToken) {
+      tokenToConsume = storedToken;
+      userCtx.setAuthToken(storedToken);
+    } else {
+      tokenToConsume = userCtx.authToken;
+    }
+
+    const fetchUserData = async () => {
+      const response = await axios({
+        method: 'GET',
+        url: `http://${IP}:${PORT}/api/userInfo/${username}`,
+        headers: {
+          Authorization: `Bearer ${tokenToConsume}`,
+        },
+      });
+
       const { user, medicines, contacts } = response.data;
+
       userCtx.setUsernameValue(user.username);
       userCtx.setFullNameValue(user.fullNameValue);
       userCtx.setEmailValue(user.email);
@@ -26,7 +45,61 @@ const UserPage = () => {
 
       userCtx.setEmergencyContacts(contacts.emergency);
       userCtx.setPhysicianContacts(contacts.physicians);
-    });
+    };
+
+    fetchUserData();
+  }, []);
+
+  console.log('Check userContext 2', userCtx.authToken);
+
+  // useEffect(() => {
+  //   axios({
+  //     method: 'GET',
+  //     url: `http://${IP}:${PORT}/api/userInfo/${username}`,
+  //     headers: {
+  //       Authorization: `Bearer ${userCtx.authToken}`,
+  //     },
+  //   }).then((response) => {
+  //     const { user, medicines, contacts } = response.data;
+  //     console.log('Check2');
+  //     userCtx.setUsernameValue(user.username);
+  //     userCtx.setFullNameValue(user.fullNameValue);
+  //     userCtx.setEmailValue(user.email);
+  //     userCtx.setQrCode(user.qrCode);
+  //     userCtx.setAllergies(user.allergies);
+
+  //     userCtx.setMedicines(medicines);
+
+  //     userCtx.setEmergencyContacts(contacts.emergency);
+  //     userCtx.setPhysicianContacts(contacts.physicians);
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const response = await axios({
+        method: 'GET',
+        url: `http://${IP}:${PORT}/api/userInfo/${username}`,
+        headers: {
+          Authorization: `Bearer ${userCtx.authToken}`,
+        },
+      });
+
+      const { user, medicines, contacts } = response.data;
+
+      userCtx.setUsernameValue(user.username);
+      userCtx.setFullNameValue(user.fullNameValue);
+      userCtx.setEmailValue(user.email);
+      userCtx.setQrCode(user.qrCode);
+      userCtx.setAllergies(user.allergies);
+
+      userCtx.setMedicines(medicines);
+
+      userCtx.setEmergencyContacts(contacts.emergency);
+      userCtx.setPhysicianContacts(contacts.physicians);
+    };
+
+    fetchUserData();
   }, []);
 
   useContext(() => {

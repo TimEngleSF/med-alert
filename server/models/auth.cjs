@@ -196,8 +196,6 @@ module.exports = {
       code: 201,
       data: {
         username: userData.username,
-        userId: userData._id,
-        email: userData.email,
         token: token,
       },
     };

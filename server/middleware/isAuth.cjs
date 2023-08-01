@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const isAuth = async (req, res, next) => {
   const authHeader = req.get('Authorization');
-  console.log(authHeader);
+  console.log('check', authHeader);
   if (!authHeader) {
     return res.status(401).json({ msg: 'Not authenticated' });
   }

@@ -2,18 +2,23 @@ const { Auth } = require('../models/index.cjs');
 
 module.exports = {
   getAllUserInfo: async (req, res) => {
+    const authUsername = req.user.username;
     const { username } = req.params;
-    try {
-      const responseBody = await Auth.getAllUserInfo(username);
-      res.send(responseBody);
-    } catch (err) {
-      res.status(400).send(err);
+
+    if (authUsername === username) {
+      try {
+        const responseBody = await Auth.getAllUserInfo(username);
+        res.send(responseBody);
+      } catch (err) {
+        res.status(400).send(err);
+      }
+    } else {
+      res.status(403).send({ msg: 'Not authorized to access this content' });
     }
   },
 
   login: async (req, res) => {
     const { email, password } = req.body;
-    console.log(email, password);
     const response = await Auth.login(email, password);
     res.status(response.code).send(response.data);
   },
@@ -22,7 +27,6 @@ module.exports = {
     const { body } = req;
     try {
       const responseBody = await Auth.register(body);
-      console.log('CONTROLLERS', responseBody);
       if (!responseBody) {
         res.status(400).send({ msg: 'User already exists!' });
       } else {
