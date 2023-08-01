@@ -1,7 +1,7 @@
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const connectDB = require('../db/index.cjs');
-// const passport = require('passport');
-const { hashPassword } = require('../utils/helpers.cjs');
 
 const EX_IP = process.env.EX_IP || '127.0.0.1';
 const EX_PORT = process.env.EX_PORT || '3000';
@@ -95,18 +95,30 @@ module.exports = {
     try {
       // Check if user exists, if so return
       const userDB = await usersCollection.findOne({ email: user.email });
+      // const userNameExist = await usersCollection.findOne({
+      //   username: user.username,
+      // });
       if (userDB) {
         return false;
       }
       /////////////////////////Continue if User does not Exist/////////////////////////////////
       // Create Hashed password
-      userDocument.password = await hashPassword(user.password);
+      userDocument.password = await bcrypt.hash(user.password, 10);
 
       //  Insert user
       const userResult = await usersCollection.insertOne({
         ...userDocument,
       });
       const userId = userResult.insertedId;
+      // sign token
+      const token = jwt.sign(
+        {
+          userId: userId,
+          email: user.email,
+          username: user.username,
+        },
+        process.env.JWT_SECRET
+      );
 
       //  Insert Medicine
       await Promise.all(
@@ -150,7 +162,9 @@ module.exports = {
         // schedule: { id: schedResult.insertedId, scheduleDocument },
         medicines: medsData[0].medicines,
         contacts: { id: contactResult.insertedId, contacts },
+        token,
       };
+      console.log(responseBody);
       return responseBody;
     } catch (err) {
       console.error(err);

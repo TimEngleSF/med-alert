@@ -11,14 +11,15 @@ module.exports = {
     }
   },
 
-  login: async (req, res) => {
-    return await Auth.login();
-  },
+  // login: async (req, res) => {
+  //   return await Auth.login();
+  // },
 
   register: async (req, res) => {
     const { body } = req;
     try {
       const responseBody = await Auth.register(body);
+      console.log('CONTROLLERS', responseBody);
       if (!responseBody) {
         res.status(400).send({ msg: 'User already exists!' });
       } else {
@@ -30,7 +31,6 @@ module.exports = {
       // };
     } catch (err) {
       res.status(400).send(err);
-      throw err;
     }
   },
 };

@@ -27,6 +27,8 @@ function App() {
   const [showQR, setShowQR] = useState(false);
   const [showContacts, setShowContacts] = useState(false);
 
+  const [authToken, setAuthToken] = useState('');
+
   return (
     <UserContext.Provider
       value={{
@@ -41,6 +43,7 @@ function App() {
         allergies: allergies,
         showQR: showQR,
         showContacts: showContacts,
+        authToken: authToken,
 
         setFullNameValue: setFullNameValue,
         setUsernameValue: setUsernameValue,
@@ -53,6 +56,7 @@ function App() {
         setAllergies: setAllergies,
         setShowQR: setShowQR,
         setShowContacts: setShowContacts,
+        setAuthToken: setAuthToken,
       }}
     >
       <div className="container bg-cyan-50 h-full py-6 mx-auto max-w-[542px]">
