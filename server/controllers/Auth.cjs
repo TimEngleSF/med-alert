@@ -11,9 +11,12 @@ module.exports = {
     }
   },
 
-  // login: async (req, res) => {
-  //   return await Auth.login();
-  // },
+  login: async (req, res) => {
+    const { email, password } = req.body;
+    console.log(email, password);
+    const response = await Auth.login(email, password);
+    res.status(response.code).send(response.data);
+  },
 
   register: async (req, res) => {
     const { body } = req;

@@ -171,4 +171,35 @@ module.exports = {
       throw err;
     }
   },
+
+  login: async (email, password) => {
+    const userData = await usersCollection.findOne({ email: email });
+    if (!userData) {
+      return { status: 404, msg: 'No account with that email exists' };
+    }
+    console.log(userData);
+    const isValidPass = await bcrypt.compare(password, userData.password);
+
+    if (!isValidPass) {
+      return { code: 401, msg: 'Invalid Password' };
+    }
+    const token = await jwt.sign(
+      {
+        userId: userData._id,
+        username: userData.username,
+        email: userData.email,
+      },
+      process.env.JWT_SECRET
+    );
+
+    return {
+      code: 201,
+      data: {
+        username: userData.username,
+        userId: userData._id,
+        email: userData.email,
+        token: token,
+      },
+    };
+  },
 };
