@@ -7,7 +7,7 @@ const isAuth = require('./middleware/isAuth.cjs');
 const nodeCron = require('./notification/notifyContact.cjs');
 
 const router = require('./routes.cjs');
-const authRouter = require('./routes/auth.cjs');
+const { authRouter, guestRouter } = require('./routes/index.cjs');
 const connectDb = require('./db/index.cjs');
 
 const PORT = process.env.EX_PORT || 3000;
@@ -30,6 +30,7 @@ const startServer = async () => {
     );
 
     app.use('/api/auth', authRouter);
+    app.use('/guest', guestRouter);
 
     // All endpoints below require authorization
     app.use(isAuth);

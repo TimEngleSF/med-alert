@@ -81,7 +81,7 @@ module.exports = {
       password: '',
       authenticated: true,
       authorization: 'user',
-      qrCode: `https://image-charts.com/chart?chs=150x150&cht=qr&chl=http://${EX_IP}:${EX_PORT}/user/${user.username}/guest&choe=UTF-8`,
+      qrCode: `https://image-charts.com/chart?chs=150x150&cht=qr&chl=http://${EX_IP}:${EX_PORT}/guest/${user.username}&choe=UTF-8`,
       allergies: user.allergies,
     };
 

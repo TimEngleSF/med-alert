@@ -52,29 +52,6 @@ const UserPage = () => {
 
   console.log('Check userContext 2', userCtx.authToken);
 
-  // useEffect(() => {
-  //   axios({
-  //     method: 'GET',
-  //     url: `http://${IP}:${PORT}/api/userInfo/${username}`,
-  //     headers: {
-  //       Authorization: `Bearer ${userCtx.authToken}`,
-  //     },
-  //   }).then((response) => {
-  //     const { user, medicines, contacts } = response.data;
-  //     console.log('Check2');
-  //     userCtx.setUsernameValue(user.username);
-  //     userCtx.setFullNameValue(user.fullNameValue);
-  //     userCtx.setEmailValue(user.email);
-  //     userCtx.setQrCode(user.qrCode);
-  //     userCtx.setAllergies(user.allergies);
-
-  //     userCtx.setMedicines(medicines);
-
-  //     userCtx.setEmergencyContacts(contacts.emergency);
-  //     userCtx.setPhysicianContacts(contacts.physicians);
-  //   });
-  // }, []);
-
   useEffect(() => {
     const fetchUserData = async () => {
       const response = await axios({

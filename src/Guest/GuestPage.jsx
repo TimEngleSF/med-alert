@@ -1,19 +1,25 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Dna } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../store/user-info-context';
 import MedicineList from './List/MedicineList';
 
+const IP = import.meta.env.VITE_APP_SIP;
+const PORT = import.meta.env.VITE_APP_SPORT;
+
 const GuestPage = () => {
+  const [name, setName] = useState('');
   const userCtx = useContext(UserContext);
   const { username } = useParams();
+
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `http://127.0.0.1:3000/api/userInfo/${username}`,
+      url: `http://${IP}:${PORT}/guest/${username}`,
     }).then((response) => {
       const { user, medicines, contacts } = response.data;
+      setName(`${username.toUpperCase()}'S `);
       userCtx.setUsernameValue(user.username);
       userCtx.setFullNameValue(user.fullNameValue);
       userCtx.setEmailValue(user.email);
@@ -67,7 +73,7 @@ const GuestPage = () => {
               className=" text-lg text-red-500 cursor-pointer hover:text-red-600 hover:border-b-2 border-b-red-600 hover:py-0.5 duration-300"
               onClick={handleContactsClick}
             >
-              CONTACTS
+              {`${name} CONTACTS`}
             </a>
           </li>
         </ul>

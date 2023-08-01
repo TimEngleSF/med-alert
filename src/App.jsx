@@ -64,7 +64,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/user/:username" element={<UserPage />} />
-            <Route path="/user/:username/guest" element={<GuestPage />} />
+            <Route path="/guest/:username" element={<GuestPage />} />
           </Routes>
         </Router>
         {showQR && <QRModal />}
