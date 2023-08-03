@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const connectDB = require('../db/index.cjs');
 
 const EX_IP = process.env.EX_IP || '127.0.0.1';
-const EX_PORT = process.env.EX_PORT || '3000';
+const FE_PORT = process.env.VITE_APP_PORT;
 let usersCollection;
 let contactsCollection;
 let medicineCollection;
@@ -81,7 +81,7 @@ module.exports = {
       password: '',
       authenticated: true,
       authorization: 'user',
-      qrCode: `https://image-charts.com/chart?chs=150x150&cht=qr&chl=http://${EX_IP}:${EX_PORT}/guest/${user.username}&choe=UTF-8`,
+      qrCode: `https://image-charts.com/chart?chs=150x150&cht=qr&chl=http://${EX_IP}:${FE_PORT}/guest/${user.username}&choe=UTF-8`,
       allergies: user.allergies,
     };
 
