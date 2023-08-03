@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Dna } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
