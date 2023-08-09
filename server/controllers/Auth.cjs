@@ -2,17 +2,25 @@ const { Auth } = require('../models/index.cjs');
 
 module.exports = {
   getAllUserInfo: async (req, res) => {
+    const authUsername = req.user.username;
     const { username } = req.params;
-    try {
-      const responseBody = await Auth.getAllUserInfo(username);
-      res.send(responseBody);
-    } catch (err) {
-      res.status(400).send(err);
+
+    if (authUsername === username) {
+      try {
+        const responseBody = await Auth.getAllUserInfo(username);
+        res.send(responseBody);
+      } catch (err) {
+        res.status(400).send(err);
+      }
+    } else {
+      res.status(403).send({ msg: 'Not authorized to access this content' });
     }
   },
 
   login: async (req, res) => {
-    return await Auth.login();
+    const { email, password } = req.body;
+    const response = await Auth.login(email, password);
+    res.status(response.code).send(response.data);
   },
 
   register: async (req, res) => {
@@ -30,7 +38,6 @@ module.exports = {
       // };
     } catch (err) {
       res.status(400).send(err);
-      throw err;
     }
   },
 };

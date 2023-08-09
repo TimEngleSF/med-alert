@@ -27,6 +27,8 @@ function App() {
   const [showQR, setShowQR] = useState(false);
   const [showContacts, setShowContacts] = useState(false);
 
+  const [authToken, setAuthToken] = useState('');
+
   return (
     <UserContext.Provider
       value={{
@@ -41,6 +43,7 @@ function App() {
         allergies: allergies,
         showQR: showQR,
         showContacts: showContacts,
+        authToken: authToken,
 
         setFullNameValue: setFullNameValue,
         setUsernameValue: setUsernameValue,
@@ -53,6 +56,7 @@ function App() {
         setAllergies: setAllergies,
         setShowQR: setShowQR,
         setShowContacts: setShowContacts,
+        setAuthToken: setAuthToken,
       }}
     >
       <div className="container bg-cyan-50 h-full py-6 mx-auto max-w-[542px]">
@@ -60,7 +64,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/user/:username" element={<UserPage />} />
-            <Route path="/user/:username/guest" element={<GuestPage />} />
+            <Route path="/guest/:username" element={<GuestPage />} />
           </Routes>
         </Router>
         {showQR && <QRModal />}
@@ -68,17 +72,6 @@ function App() {
       </div>
     </UserContext.Provider>
   );
-
-  // return (
-  //   <div className="container bg-blue-50 h-full py-6">
-  //     <header>
-  //       <h1 className="text-3xl mb-4">MediAlert*</h1>
-  //     </header>
-  //     <main>
-  //       <List meds={meds} setMeds={setMeds} />
-  //     </main>
-  //   </div>
-  // );
 }
 
 export default App;

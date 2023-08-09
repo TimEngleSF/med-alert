@@ -4,14 +4,18 @@ import axios from 'axios';
 
 const registerUser = async (payload) => {
   try {
-    const data = await axios({
+    const response = await axios({
       method: 'POST',
       url: `http://${IP}:${PORT}/api/auth/register`,
       data: payload,
     });
-    return data;
+    return response;
   } catch (err) {
-    console.error(err);
+    console.error('Error making request:', err.message);
+    if (err.response) {
+      console.error('Response status:', err.response.status);
+      console.error('Response data:', err.response.data);
+    }
   }
 };
 

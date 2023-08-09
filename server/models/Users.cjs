@@ -24,8 +24,6 @@ const connectToCollection = async () => {
 connectToCollection();
 
 module.exports = {
-  getAllUser: async (email) => {},
-
   createUser: async (reqBody) => {
     const { user, sched, contacts } = reqBody;
 

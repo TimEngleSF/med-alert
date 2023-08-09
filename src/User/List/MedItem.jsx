@@ -91,6 +91,9 @@ const MedItem = ({ med, setMeds }) => {
       method: 'PUT',
       url: `http://${IP}:${PORT}/api/medicines`,
       data: { id: med._id, boolean: updatedBoolean },
+      headers: {
+        Authorization: `Bearer ${userCtx.authToken}`,
+      },
     }).then((response) => {
       let updatedMed = response.data.value;
       if (!updatedBoolean) {

@@ -1,33 +1,54 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+
+import UserContext from '../../store/user-info-context';
+
+const IP = import.meta.env.VITE_APP_SIP;
+const PORT = import.meta.env.VITE_APP_SPORT;
 
 const LoginForm = ({ setShowRegister }) => {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
+  const userCtx = useContext(UserContext);
+
+  const navigate = useNavigate();
+
   const changeHandler = (setter) => (e) => {
     setter(e.target.value);
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    if (!emailValue || !passwordValue) {
-      return;
-    }
-    loginAccount();
   };
 
   const loginAccount = async () => {
     try {
       const data = await axios({
         method: 'POST',
-        url: 'http://127.0.0.1:3000/api/auth/login',
+        url: `http://${IP}:${PORT}/api/auth/login`,
         data: { email: emailValue, password: passwordValue },
       });
+      return data;
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    if (!emailValue || !passwordValue) {
+      return;
+    }
+
+    const response = await loginAccount();
+
+    if (response.status === 201) {
+      const { username, token } = response.data;
+
+      userCtx.setAuthToken(token);
+      localStorage.setItem('jwt', token);
+
+      navigate(`/user/${username}`);
     }
   };
 
@@ -74,7 +95,7 @@ const LoginForm = ({ setShowRegister }) => {
             className="outline h-8 outline-2 cursor-pointer rounded-md"
             onClick={handleRegClick}
           >
-            Regiser
+            Register
           </button>
         </div>
       </form>

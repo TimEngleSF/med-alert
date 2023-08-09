@@ -48,7 +48,7 @@ const ContactsInput = () => {
         <FormInput
           text={'Email'}
           onChange={handleChange(setEmailValue)}
-          type="email"
+          type="text"
         />
         <FormInput
           text={'Phone Number'}
@@ -78,7 +78,7 @@ const ContactsInput = () => {
         </label>
         <button
           type="button"
-          className={`cursor-pointer h-8 w-16 rounded-md outline outline-[#b3a5af] outline-1 text-white bg-[#b3a5af] font-semibold tracking-wider`}
+          className={`cursor-pointer h-8 w-16 rounded-md outline  text-white bg-sky-400 font-semibold tracking-wider`}
           onClick={handleAdd}
         >
           Add
