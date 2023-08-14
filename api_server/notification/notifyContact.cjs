@@ -26,7 +26,14 @@ const connectToCollection = async () => {
 
 connectToCollection();
 
-module.exports = nodeCron.schedule('5,35 * * * *', () => {
+let count = 0;
+// nodeCron.schedule('* * * * * *', () => {
+//   count++;
+//   count = count === 11 ? 1 : count;
+//   console.log(count);
+// });
+
+module.exports = nodeCron.schedule('* * * * *', () => {
   const checkTakenMedices = async () => {
     const medicines = await medicineCollection.find({ taken: false }).toArray();
     const filteredMed = medicines.filter((med) => checkIfLate(med.time));
